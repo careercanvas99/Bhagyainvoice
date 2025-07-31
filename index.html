@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhagya Groups - Invoice App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="invoice-app-container">
+        <header class="app-header">
+            <h1>Bhagya Groups</h1>
+            <p>Beeramguda, Telangana, India</p>
+        </header>
+
+        <section class="invoice-details-section card">
+            <h2>Invoice Details</h2>
+            <div class="form-group">
+                <label for="customerName">Customer Name:</label>
+                <input type="text" id="customerName" placeholder="Enter Customer Name" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="invoiceDate">Invoice Date:</label>
+                    <input type="date" id="invoiceDate" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="invoiceNumber">Invoice Number:</label>
+                    <input type="text" id="invoiceNumber" readonly>
+                </div>
+            </div>
+        </section>
+
+        <section class="item-entry-section card">
+            <h2>Items</h2>
+            <table class="item-table">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Price (₹)</th>
+                        <th>Total (₹)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="itemTableBody">
+                    <!-- Item rows will be added here by JavaScript -->
+                </tbody>
+            </table>
+            <button id="addItemBtn" class="btn add-item-btn">Add Item</button>
+        </section>
+
+        <section class="summary-section card">
+            <div class="summary-row">
+                <span>Subtotal:</span>
+                <span id="subtotalDisplay" class="amount">₹ 0.00</span>
+            </div>
+            <div class="summary-row">
+                <span>GST (18%):</span>
+                <span id="gstDisplay" class="amount">₹ 0.00</span>
+            </div>
+            <div class="summary-row grand-total-row">
+                <span>Grand Total:</span>
+                <span id="grandTotalDisplay" class="amount">₹ 0.00</span>
+            </div>
+        </section>
+
+        <section class="action-buttons-section">
+            <button id="generateInvoiceBtn" class="btn primary-btn">Generate Invoice</button>
+            <button id="downloadInvoiceBtn" class="btn secondary-btn">Download Invoice</button>
+            <button id="resetBtn" class="btn tertiary-btn">Reset</button>
+        </section>
+
+        <section id="invoicePreview" class="invoice-preview card hidden">
+            <!-- Generated invoice content will be displayed here -->
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
