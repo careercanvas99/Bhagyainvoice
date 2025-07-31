@@ -1,0 +1,450 @@
+/* Basic Reset & Global Styles */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif; /* Using a common sans-serif font */
+    background-color: #f0f2f5; /* Light grey background */
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to top */
+    min-height: 100vh;
+}
+
+.invoice-app-container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    width: 100%;
+    max-width: 800px; /* Max width for the app container */
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between sections */
+}
+
+/* Card Styling for Sections */
+.card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    padding: 25px;
+}
+
+/* Header */
+.app-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.app-header h1 {
+    color: #2c3e50; /* Dark blue-grey */
+    font-size: 2.5em;
+    margin-bottom: 5px;
+}
+
+.app-header p {
+    color: #7f8c8d; /* Grey */
+    font-size: 1.1em;
+}
+
+/* Form Groups & Inputs */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="date"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    font-size: 1em;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    -webkit-appearance: none; /* Remove default styling for some inputs */
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group input[type="date"]:focus {
+    border-color: #4a90e2; /* Blue focus */
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+    outline: none;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+/* Buttons */
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.primary-btn {
+    background-color: #4a90e2; /* Blue */
+    color: #ffffff;
+}
+
+.primary-btn:hover {
+    background-color: #357ABD; /* Darker blue */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.secondary-btn {
+    background-color: #2ecc71; /* Green */
+    color: #ffffff;
+}
+
+.secondary-btn:hover {
+    background-color: #27ae60; /* Darker green */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tertiary-btn {
+    background-color: #e74c3c; /* Red */
+    color: #ffffff;
+}
+
+.tertiary-btn:hover {
+    background-color: #c0392b; /* Darker red */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.add-item-btn {
+    background-color: #f39c12; /* Orange */
+    color: #ffffff;
+    margin-top: 15px;
+    display: block; /* Make it a block button */
+    width: fit-content; /* Fit content width */
+    margin-left: auto; /* Center it */
+    margin-right: auto; /* Center it */
+}
+
+.add-item-btn:hover {
+    background-color: #e67e22; /* Darker orange */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.remove-item-btn {
+    background-color: #e74c3c; /* Red */
+    color: #ffffff;
+    padding: 8px 12px;
+    font-size: 0.9em;
+    border-radius: 6px;
+    box-shadow: none; /* No shadow for small buttons */
+}
+
+.remove-item-btn:hover {
+    background-color: #c0392b;
+    transform: none; /* No transform for small buttons */
+    box-shadow: none;
+}
+
+.action-buttons-section {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+    margin-top: 10px;
+}
+
+/* Item Table */
+.item-table {
+    width: 100%;
+    border-collapse: separate; /* Use separate to allow border-radius on cells */
+    border-spacing: 0; /* Remove space between cells */
+    margin-top: 15px;
+}
+
+.item-table th,
+.item-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.item-table th {
+    background-color: #f8f8f8;
+    color: #555;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+.item-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.item-table input[type="text"],
+.item-table input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    font-size: 0.95em;
+}
+
+/* Summary Section */
+.summary-section {
+    margin-top: 20px;
+    padding: 20px 25px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 1.1em;
+    color: #555;
+}
+
+.summary-row:not(:last-child) {
+    border-bottom: 1px dashed #eee;
+}
+
+.grand-total-row {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #2c3e50;
+    padding-top: 15px;
+    border-top: 2px solid #e0e0e0;
+}
+
+.amount {
+    font-weight: 600;
+    color: #4a90e2;
+}
+
+/* Invoice Preview */
+.invoice-preview {
+    margin-top: 30px;
+    padding: 30px;
+    border: 1px solid #e0e0e0;
+    background-color: #f9fbfd; /* Slightly different background for preview */
+    color: #333;
+    font-size: 0.95em;
+}
+
+.invoice-preview.hidden {
+    display: none;
+}
+
+.invoice-preview h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.invoice-preview .invoice-header,
+.invoice-preview .invoice-customer-details,
+.invoice-preview .invoice-summary {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.invoice-preview .invoice-header p,
+.invoice-preview .invoice-customer-details p {
+    margin-bottom: 5px;
+}
+
+.invoice-preview .invoice-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.invoice-preview .invoice-items-table th,
+.invoice-preview .invoice-items-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.invoice-preview .invoice-items-table th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+}
+
+.invoice-preview .invoice-summary .summary-row {
+    font-size: 1em;
+    padding: 5px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .invoice-app-container {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    .app-header h1 {
+        font-size: 2em;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0; /* Remove gap in column layout */
+    }
+
+    .action-buttons-section {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .item-table th,
+    .item-table td {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+
+    .item-table input {
+        font-size: 0.9em;
+        padding: 6px;
+    }
+
+    .remove-item-btn {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .invoice-app-container {
+        padding: 15px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .app-header h1 {
+        font-size: 1.8em;
+    }
+
+    .app-header p {
+        font-size: 1em;
+    }
+
+    .summary-row {
+        font-size: 1em;
+    }
+
+    .grand-total-row {
+        font-size: 1.1em;
+    }
+}
+
+/* Print Specific Styles */
+@media print {
+    body {
+        margin: 0;
+        padding: 0;
+        background: none;
+        -webkit-print-color-adjust: exact; /* For background colors to print */
+        print-color-adjust: exact;
+    }
+
+    .invoice-app-container {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .app-header,
+    .invoice-details-section,
+    .item-entry-section,
+    .summary-section,
+    .action-buttons-section {
+        display: none; /* Hide input form and buttons when printing */
+    }
+
+    .invoice-preview {
+        display: block !important; /* Force show invoice preview */
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        background-color: transparent;
+        width: 100%;
+        margin-top: 0;
+    }
+
+    .invoice-preview h2 {
+        font-size: 2.2em;
+        margin-bottom: 15px;
+    }
+
+    .invoice-preview .invoice-header,
+    .invoice-preview .invoice-customer-details,
+    .invoice-preview .invoice-summary {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+
+    .invoice-preview .invoice-items-table th,
+    .invoice-preview .invoice-items-table td {
+        border: 1px solid #ccc;
+        padding: 8px;
+    }
+
+    .invoice-preview .invoice-items-table th {
+        background-color: #f8f8f8 !important; /* Ensure background prints */
+    }
+
+    .invoice-preview .invoice-summary .summary-row {
+        border-bottom: none;
+    }
+
+    .invoice-preview .grand-total-row {
+        border-top: 1px solid #ccc;
+        padding-top: 10px;
+    }
+}
