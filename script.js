@@ -26,9 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const dd = String(today.getDate()).padStart(2, '0');
         invoiceDateInput.value = `${yyyy}-${mm}-${dd}`;
 
-        // Generate a simple invoice number (e.g., INV-YYYYMMDD-XXXX)
-        const timestamp = Date.now();
-        invoiceNumberInput.value = `INV-${yyyy}${mm}${dd}-${String(timestamp).slice(-4)}`;
+        // Set the invoice number to start from INV-BG-001
+        invoiceNumberInput.value = `INV-BG-001`;
 
         // Add the first item row
         addItemRow();
@@ -44,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <td><input type="text" class="item-name" placeholder="Item Name" required></td>
             <td><input type="number" class="item-quantity" value="1" min="1" required></td>
             <td><input type="number" class="item-price" value="0.00" min="0" step="0.01" required></td>
+            <td><input type="number" class="item-discount" value="0" min="0" max="100" step="0.01"></td>
             <td><span class="item-total">₹ 0.00</span></td>
             <td><button class="remove-item-btn">Remove</button></td>
         `;
@@ -53,10 +53,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add event listeners for the new row's inputs and remove button
         const quantityInput = row.querySelector('.item-quantity');
         const priceInput = row.querySelector('.item-price');
+        const discountInput = row.querySelector('.item-discount');
         const removeBtn = row.querySelector('.remove-item-btn');
 
         quantityInput.addEventListener('input', calculateTotals);
         priceInput.addEventListener('input', calculateTotals);
+        discountInput.addEventListener('input', calculateTotals);
         removeBtn.addEventListener('click', () => {
             row.remove();
             calculateTotals();
@@ -81,7 +83,14 @@ document.addEventListener('DOMContentLoaded', () => {
         itemRows.forEach(row => {
             const quantity = parseFloat(row.querySelector('.item-quantity').value) || 0;
             const price = parseFloat(row.querySelector('.item-price').value) || 0;
-            const itemTotal = quantity * price;
+            const discount = parseFloat(row.querySelector('.item-discount').value) || 0;
+
+            let itemTotal = quantity * price;
+            // Apply discount
+            if (discount > 0) {
+                itemTotal -= itemTotal * (discount / 100);
+            }
+
             row.querySelector('.item-total').textContent = `₹ ${itemTotal.toFixed(2)}`;
             subtotal += itemTotal;
         });
@@ -112,26 +121,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let itemsHtml = '';
         const itemRows = itemTableBody.querySelectorAll('tr');
+        let hasValidItem = false; // Flag to check if at least one valid item exists
+
         itemRows.forEach(row => {
             const itemName = row.querySelector('.item-name').value.trim();
-            const quantity = row.querySelector('.item-quantity').value;
-            const price = parseFloat(row.querySelector('.item-price').value).toFixed(2);
-            const itemTotal = parseFloat(quantity * price).toFixed(2);
+            const quantity = parseFloat(row.querySelector('.item-quantity').value);
+            const price = parseFloat(row.querySelector('.item-price').value);
+            const discount = parseFloat(row.querySelector('.item-discount').value);
 
+            // Only include items that have a name, positive quantity, and non-negative price
             if (itemName && quantity > 0 && price >= 0) {
+                hasValidItem = true;
+                let itemTotal = quantity * price;
+                if (discount > 0) {
+                    itemTotal -= itemTotal * (discount / 100);
+                }
+                itemTotal = itemTotal.toFixed(2);
+
                 itemsHtml += `
                     <tr>
                         <td>${itemName}</td>
                         <td>${quantity}</td>
-                        <td>₹ ${price}</td>
+                        <td>₹ ${price.toFixed(2)}</td>
+                        <td>${discount.toFixed(2)}%</td>
                         <td>₹ ${itemTotal}</td>
                     </tr>
                 `;
             }
         });
 
-        if (!itemsHtml) {
-            alert('Please add at least one valid item before generating invoice.');
+        if (!hasValidItem) {
+            alert('Please add at least one valid item (with name, quantity > 0, and price >= 0) before generating invoice.');
             return '';
         }
 
@@ -156,6 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <th>Item</th>
                             <th>Qty</th>
                             <th>Price</th>
+                            <th>Discount</th>
                             <th>Total</th>
                         </tr>
                     </thead>
@@ -181,7 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 <div class="invoice-footer">
                     <p>Thank you for your business!</p>
-                    <p>Signature: _________________________</p>
                 </div>
             </div>
         `;
@@ -236,6 +256,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         border: 1px solid #ddd; padding: 12px; text-align: left;
                     }
                     .invoice-items-table th { background-color: #f8f8f8; font-weight: 600; color: #555; }
+                    /* Adjust column widths for downloaded invoice table */
+                    .invoice-items-table th:nth-child(1), .invoice-items-table td:nth-child(1) { width: 30%; } /* Item */
+                    .invoice-items-table th:nth-child(2), .invoice-items-table td:nth-child(2) { width: 15%; } /* Qty */
+                    .invoice-items-table th:nth-child(3), .invoice-items-table td:nth-child(3) { width: 20%; } /* Price */
+                    .invoice-items-table th:nth-child(4), .invoice-items-table td:nth-child(4) { width: 15%; } /* Discount */
+                    .invoice-items-table th:nth-child(5), .invoice-items-table td:nth-child(5) { width: 20%; } /* Total */
+
                     .invoice-summary { width: 100%; max-width: 300px; margin-left: auto; }
                     .invoice-summary .summary-row {
                         display: flex; justify-content: space-between; padding: 8px 0; font-size: 1.1em;
